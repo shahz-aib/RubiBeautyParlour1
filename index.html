@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rubi Beauty Parlour - Register/Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .bg-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg-slideshow .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .bg-slideshow .slide.active {
+            opacity: 1;
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: skewX(-15deg);
+            pointer-events: none;
+        }
+
+        .container h2 {
+            color: #fff;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            outline: none;
+            border-radius: 35px;
+            font-size: 16px;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+        }
+
+        .remember {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .remember label input {
+            margin-right: 5px;
+            accent-color: #ff6b8b;
+        }
+
+        .remember a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .remember a:hover {
+            color: #ff6b8b;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff6b8b, #c2185b);
+            border: none;
+            outline: none;
+            border-radius: 35px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(194, 24, 91, 0.3);
+        }
+
+        .register-link {
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #ff6b8b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toggle-forms {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-btn.active {
+            color: #ff6b8b;
+        }
+
+        .toggle-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: 3px;
+            background: #ff6b8b;
+            border-radius: 3px;
+        }
+
+        .error-message,
+        .success-message {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .error-message {
+            color: #ff6b8b;
+        }
+
+        .success-message {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-slideshow">
+        <div class="slide active" style="background-image: url('images/interio2.jpg.jpg');"></div>
+        <div class="slide" style="background-image: url('images/interior4.jpg.jpg');"></div>
+        <div class="slide" style="background-image: url('images/interior3.jpg.jpg');"></div>
+    </div>
+
+    <div class="container">
+        <div class="toggle-forms">
+            <button class="toggle-btn" onclick="showForm('register')">Register</button>
+            <button class="toggle-btn active" onclick="showForm('login')">Login</button>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="register-form" class="form-container">
+            <h2>Create Account</h2>
+            <div id="register-error" class="error-message"></div>
+            <div id="register-success" class="success-message"></div>
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="reg-name" placeholder="Full Name" required />
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="reg-email" placeholder="Email" required />
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="reg-phone" placeholder="Phone Number" required />
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="reg-password" placeholder="Password" required />
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required />
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="register-link">
+                    Already have an account? <a href="#" onclick="showForm('login')">Login</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-container active">
+            <h2>Welcome Back</h2>
+            <div id="login-error" class="error-message"></div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="login-email" placeholder="Email" required />
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" placeholder="Password" required />
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="remember">
+                    <label><input type="checkbox" id="remember-me" /> Remember me</label>
+                    <a href="#" id="forgot-password">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="register-link">
+                    New user? <a href="#" onclick="showForm('register')">Create account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Background Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.bg-slideshow .slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        setInterval(nextSlide, 3000);
+        showSlide(currentSlide);
+
+        // Form Toggle
+        function showForm(formType) {
+            document.querySelectorAll('.form-container').forEach(form => form.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(`${formType}-form`).classList.add('active');
+            document.querySelector(`.toggle-btn[onclick="showForm('${formType}')"]`).classList.add('active');
+
+            // Clear error messages
+            document.getElementById('login-error').textContent = '';
+            document.getElementById('register-error').textContent = '';
+            document.getElementById('register-success').textContent = '';
+        }
+
+        // User Database (localStorage)
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('rubiBeautyUsers')) || [];
+        }
+
+        function saveUser(user) {
+            const users = getUsers();
+            users.push(user);
+            localStorage.setItem('rubiBeautyUsers', JSON.stringify(users));
+        }
+
+        function findUserByEmail(email) {
+            const users = getUsers();
+            return users.find(user => user.email === email);
+        }
+
+        // Register Form Submit
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+            const errorElement = document.getElementById('register-error');
+            const successElement = document.getElementById('register-success');
+
+            if (password !== confirmPassword) {
+                errorElement.textContent = "Passwords don't match!";
+                return;
+            }
+            if (password.length < 6) {
+                errorElement.textContent = "Password must be at least 6 characters";
+                return;
+            }
+            if (findUserByEmail(email)) {
+                errorElement.textContent = "User with this email already exists!";
+                return;
+            }
+
+            const newUser = { name, email, phone, password };
+            saveUser(newUser);
+
+            // Save as logged in
+            localStorage.setItem('rubiBeautyLoggedIn', JSON.stringify(newUser));
+
+            // Redirect to home
+            window.location.href = 'home.html';
+        });
+
+        // Login Form Submit
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            const errorElement = document.getElementById('login-error');
+
+            const user = findUserByEmail(email);
+
+            if (!user) {
+                errorElement.textContent = "User not found. Please register first.";
+                return;
+            }
+            if (user.password !== password) {
+                errorElement.textContent = "Incorrect password!";
+                return;
+            }
+
+            // Save login state
+            if (rememberMe) {
+                localStorage.setItem('rubiBeautyLoggedIn', JSON.stringify(user));
+            } else {
+                sessionStorage.setItem('rubiBeautyLoggedIn', JSON.stringify(user));
+            }
+
+            // Redirect
+            window.location.href = 'home.html';
+        });
+
+        // Check login on load
+        window.addEventListener('load', function () {
+            const loggedInUser = JSON.parse(localStorage.getItem('rubiBeautyLoggedIn')) ||
+                JSON.parse(sessionStorage.getItem('rubiBeautyLoggedIn'));
+            if (loggedInUser) {
+                window.location.href = 'home.html';
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('registered') === 'true') {
+                showForm('login');
+                document.getElementById('register-success').textContent = 'Registration successful! Please login.';
+            }
+        });
+
+        // Forgot Password Click
+        document.getElementById('forgot-password').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('login-error').textContent = 'Please contact the salon to reset your password.';
+        });
+    </script>
+</body>
+
+</html>

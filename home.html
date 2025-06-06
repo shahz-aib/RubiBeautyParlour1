@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rubi Beauty Parlour – Professional Beauty & Bridal Services</title>
+    <meta name="description"
+        content="Book your appointment at Rubi Beauty Parlour for Mehndi, Facial, Haircut, Bridal Packages, and more in Alipur." />
+    <meta name="keywords" content="Beauty Parlour, Mehndi, Bridal Makeup, Haircut, Facial, Alipur" />
+    <meta property="og:title" content="Rubi Beauty Parlour – Professional Beauty & Bridal Services" />
+    <meta property="og:description"
+        content="Book your appointment at Rubi Beauty Parlour for professional Mehndi, Facial, Haircut, Bridal Packages, and more." />
+    <meta property="og:image" content="images/front.jpg.jpg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="images/interio2.jpg.jpg" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="#home">Rubi Beauty Parlour</a></h1>
+            <button class="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#booking">Book Appointment</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero" role="banner" aria-label="Homepage Banner">
+            <div class="slide active" data-bg="images/front.jpg.jpg"></div>
+            <div class="slide" data-bg="images/interio2.jpg.jpg"></div>
+            <div class="slide" data-bg="images/interior3.jpg.jpg"></div>
+            <div class="overlay"></div>
+            <div class="hero-content">
+                <h2>Welcome to Rubi Beauty Parlour</h2>
+                <p>Where Beauty Meets Elegance</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery" aria-label="Gallery of services and salon photos">
+            <h2>Our Gallery</h2>
+            <div class="gallery-grid">
+                <img class="gallery-image active" src="images/interior1.jpg.jpg" alt="Interior 1" loading="lazy" />
+                <img class="gallery-image" src="images/interio2.jpg.jpg" alt="Interior 2" loading="lazy" />
+                <img class="gallery-image" src="images/interior3.jpg.jpg" alt="Interior 3" loading="lazy" />
+                <img class="gallery-image" src="images/interior4.jpg.jpg" alt="Interior 4" loading="lazy" />
+                <img class="gallery-image" src="images/front.jpg.jpg" alt="Salon front view" loading="lazy" />
+                <img class="gallery-image" src="images/interio2.jpg.jpg" alt="Interior 2" loading="lazy" />
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="booking" aria-labelledby="bookingHeading">
+            <h2 id="bookingHeading">Book Appointment</h2>
+            <form id="bookingForm" novalidate>
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" required />
+                <label for="phone">Phone*</label>
+                <input type="tel" id="phone" name="phone" required />
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" required />
+                <label for="address">Address (optional)</label>
+                <input type="text" id="address" name="address" />
+                <label for="service">Service*</label>
+                <select id="service" name="service" required>
+                    <option value="" disabled selected>Select Service</option>
+                    <option>Mehndi Design</option>
+                    <option>Eyebrow Shaping</option>
+                    <option>Professional Facial</option>
+                    <option>Haircut & Styling</option>
+                    <option>Bridal Package</option>
+                    <option>Hair Spa</option>
+                    <input type="date" id="date" required aria-required="true" />
+                </select>
+                <button type="submit">Book via WhatsApp</button>
+                <div id="thankYou" class="thank-you" style="display:none; color: green; margin-top: 10px;">Thank you!
+                    Redirecting to WhatsApp...</div>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contact" aria-label="Contact Information">
+            <div class="footer-content">
+                <section class="footer-section" aria-labelledby="contactUs">
+                    <h3 id="contactUs">Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Near Alyan Plaza, Circular Road, Alipur</p>
+                    <p><i class="fas fa-phone"></i> 0321-7871420 </p>
+                    <p><i class="fas fa-phone"></i> 0333-9795954</p>
+                </section>
+                <section class="footer-section" aria-labelledby="openingHours">
+                    <h3 id="openingHours">Opening Hours</h3>
+                    <p><i class="far fa-clock"></i> Mon-Sun: 9:00 AM - 8:00 PM</p>
+                </section>
+                <section class="footer-section" aria-labelledby="servicesOffered">
+                    <h3 id="servicesOffered">Services</h3>
+                    <p><i class="fas fa-spa"></i> Hair Spa</p>
+                    <p><i class="fas fa-magic"></i> Facial</p>
+                    <p><i class="fas fa-heart"></i> Bridal Makeup</p>
+                    <p><i class="fas fa-cut"></i> All Beauty Services</p>
+                </section>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobBtn = document.querySelector('.mobile-menu');
+            const navUl = document.querySelector('nav ul');
+            mobBtn.addEventListener('click', () => {
+                const expanded = navUl.classList.toggle('show');
+                mobBtn.setAttribute('aria-expanded', expanded);
+            });
+
+            // Hero slides auto-switch
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                const bg = slide.getAttribute('data-bg');
+                slide.style.backgroundImage = `url('${bg}')`;
+            });
+            let current = 0;
+            setInterval(() => {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 5000);
+
+            // Booking form WhatsApp submit
+            const form = document.getElementById('bookingForm');
+            const thanks = document.getElementById('thankYou');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+
+                // Validate form
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                // Get form data
+                const name = form.name.value.trim();
+                const phone = form.phone.value.trim();
+                const email = form.email.value.trim();
+                const address = form.address.value.trim() || 'N/A';
+                const service = form.service.value;
+
+                // Compose WhatsApp message
+                const message =
+                    `Hello Rubi Beauty Parlour,%0A%0AI would like to book an appointment:%0A` +
+                    `👤 Name: ${encodeURIComponent(name)}%0A` +
+                    `📞 Phone: ${encodeURIComponent(phone)}%0A` +
+                    `📧 Email: ${encodeURIComponent(email)}%0A` +
+                    `🏠 Address: ${encodeURIComponent(address)}%0A` +
+                    `💇 Service: ${encodeURIComponent(service)}`;
+
+                // Your WhatsApp number in international format without '+' and spaces (example Pakistan: 923001234567)
+                const whatsappNumber = '923339795954';
+
+                // Open WhatsApp chat in new tab
+                window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+
+                // Show thank you message
+                thanks.style.display = 'block';
+
+                // Reset form after submit
+                form.reset();
+
+                // Hide thank you message after 5 seconds
+                setTimeout(() => {
+                    thanks.style.display = 'none';
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+
+</html>
